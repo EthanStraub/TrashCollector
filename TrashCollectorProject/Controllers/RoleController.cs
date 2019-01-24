@@ -41,7 +41,7 @@ namespace TrashCollectorProject.Controllers
             return View(Roles);
 
         }
-        public Boolean isAdminUser()
+        public bool isAdminUser()
         {
             if (User.Identity.IsAuthenticated)
             {

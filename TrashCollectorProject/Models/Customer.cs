@@ -13,14 +13,23 @@ namespace TrashCollectorProject.Models
     {
         [Key]
         public int ID { get; set; }
+        [Display(Name = "Pickup day")]
         public string pickupDay { get; set; }
+        [Display(Name = "One-time pickup date")]
         public string oneTimePickupDay { get; set; }
+        [Display(Name = "Pickup suspension start date (optional)")]
         public string startDate { get; set; }
+        [Display(Name = "Pickup suspension end date (optional)")]
         public string endDate { get; set; }
+        [Display(Name = "Due balance on your account")]
         public int dueBalance { get; set; }
+        [Display(Name = "Address line 1")]
         public string addressLine1 { get; set; }
+        [Display(Name = "Address line 2 (optional)")]
         public string addressLine2 { get; set; }
+        [Display(Name = "City and state (i.e 'Madison, WI')")]
         public string cityAndState { get; set; }
+        [Display(Name = "Zip code")]
         public int zipCode { get; set; }
     }
 }
