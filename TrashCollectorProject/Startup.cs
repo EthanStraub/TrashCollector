@@ -52,15 +52,6 @@ namespace TrashCollectorProject
                 }
             }
 
-            // Creating Manager role    
-            if (!roleManager.RoleExists("Manager"))
-            {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Manager";
-                roleManager.Create(role);
-
-            }
-
             // Creating Employee role    
             if (!roleManager.RoleExists("Employee"))
             {

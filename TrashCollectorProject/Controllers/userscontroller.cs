@@ -9,7 +9,7 @@ using TrashCollectorProject.Models;
 
 namespace TrashCollectorProject.Controllers
 {
-    [Authorize(Roles = "Admin,Employee,Manager")]
+    [Authorize(Roles = "Admin,Employee")]
     public class UsersController : Controller
     {
         // GET: userscontroller

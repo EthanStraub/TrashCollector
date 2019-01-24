@@ -21,6 +21,7 @@ namespace TrashCollectorProject.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         DbSet<Customer> Customer;
+        DbSet<Employee> Employee;
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
