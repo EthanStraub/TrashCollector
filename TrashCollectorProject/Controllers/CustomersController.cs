@@ -10,6 +10,7 @@ using TrashCollectorProject.Models;
 
 namespace TrashCollectorProject.Controllers
 {
+    [Authorize(Roles = "Admin,User,Manager")]
     public class CustomersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
