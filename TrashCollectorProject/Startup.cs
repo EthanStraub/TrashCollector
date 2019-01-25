@@ -52,6 +52,15 @@ namespace TrashCollectorProject
                 }
             }
 
+            // Creating Customer role
+            if (!roleManager.RoleExists("Customer"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Customer";
+                roleManager.Create(role);
+
+            }
+
             // Creating Employee role    
             if (!roleManager.RoleExists("Employee"))
             {
