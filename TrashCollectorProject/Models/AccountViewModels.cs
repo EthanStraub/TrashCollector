@@ -49,7 +49,7 @@ namespace TrashCollectorProject.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "UserName")]
+        [Display(Name = "User name")]
         public string UserName { get; set; }
 
         [Required]
@@ -64,7 +64,7 @@ namespace TrashCollectorProject.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "UserRoles")]
+        [Display(Name = "User role")]
         public string UserRoles { get; set; }
 
         [Required]
@@ -73,7 +73,7 @@ namespace TrashCollectorProject.Models
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "UserName")]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
 
         [Required]

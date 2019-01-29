@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,7 +21,12 @@ namespace TrashCollectorProject.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+            string checkedId = User.Identity.GetUserId();
+            if (isAdminUser() || isEmployeeUser()) {
+                return View(db.Customers.ToList());
+            }
+            List<Customer> custList = db.Customers.Where(c => c.ApplicationUserId == checkedId).ToList();
+            return View(custList);
         }
 
         // GET: Customers/Details/5
@@ -47,13 +55,44 @@ namespace TrashCollectorProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,pickupDay,oneTimePickupDay,startDate,endDate,dueBalance,addressLine1,addressLine2,cityAndState,zipCode")] Customer customer)
+        public ActionResult Create([Bind(Include = "pickupDay,oneTimePickupDay,startDate,endDate,dueBalance,addressLine1,addressLine2,cityAndState,zipCode")] Customer customer)
         {
+            
+
             if (ModelState.IsValid)
             {
-                db.Customers.Add(customer);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    customer.ApplicationUserId = User.Identity.GetUserId();
+
+                    db.Customers.Add(customer);
+                    db.SaveChanges();
+
+                    var errors = ModelState
+                      .Where(x => x.Value.Errors.Count > 0)
+                      .Select(x => new { x.Key, x.Value.Errors })
+                      .ToArray();
+
+                    return RedirectToAction("Index");
+
+
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                                ve.PropertyName,
+                                eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
+                                ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
             }
 
             return View(customer);
@@ -123,6 +162,46 @@ namespace TrashCollectorProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public bool isAdminUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                ApplicationDbContext context = new ApplicationDbContext();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var s = UserManager.GetRoles(user.GetUserId());
+                if (s[0].ToString() == "Admin")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public bool isEmployeeUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                ApplicationDbContext context = new ApplicationDbContext();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var s = UserManager.GetRoles(user.GetUserId());
+                if (s[0].ToString() == "Employee")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
         }
     }
 }

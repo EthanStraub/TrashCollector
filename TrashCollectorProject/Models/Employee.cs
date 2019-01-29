@@ -11,7 +11,7 @@ namespace TrashCollectorProject.Models
     public class Employee
     {
         [Key]
-        public int ID { get; set; }
+        public string ID { get; set; }
         [Display(Name = "Address line 1")]
         public string addressLine1 { get; set; }
         [Display(Name = "Address line 2 (optional)")]

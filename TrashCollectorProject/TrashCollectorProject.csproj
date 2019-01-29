@@ -182,9 +182,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901251742092_FourthMigration.cs" />
-    <Compile Include="Migrations\201901251742092_FourthMigration.Designer.cs">
-      <DependentUpon>201901251742092_FourthMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201901291800586_FirstMigration.cs" />
+    <Compile Include="Migrations\201901291800586_FirstMigration.Designer.cs">
+      <DependentUpon>201901291800586_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -197,6 +197,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-darkly.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -278,8 +279,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901251742092_FourthMigration.resx">
-      <DependentUpon>201901251742092_FourthMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901291800586_FirstMigration.resx">
+      <DependentUpon>201901291800586_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
