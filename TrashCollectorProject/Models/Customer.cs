@@ -20,13 +20,13 @@ namespace TrashCollectorProject.Models
         [Display(Name = "Pickup day (i.e 'Monday', 'Tuesday', and so on)")]
         public string pickupDay { get; set; }
         [Display(Name = "One-time pickup date (optional) (i.e '2/15/2019')")]
-        public string oneTimePickupDay { get; set; }
+        public DateTime oneTimePickupDay { get; set; }
         [Display(Name = "Pickup suspension start date (optional)")]
-        public string startDate { get; set; }
+        public DateTime startDate { get; set; }
         [Display(Name = "Pickup suspension end date (optional)")]
-        public string endDate { get; set; }
+        public DateTime endDate { get; set; }
         [Display(Name = "Due balance on your account")]
-        public int? dueBalance { get; private set; }
+        public int dueBalance { get; set; }
         [Display(Name = "Address line 1")]
         public string addressLine1 { get; set; }
         [Display(Name = "Address line 2 (optional)")]
@@ -35,5 +35,11 @@ namespace TrashCollectorProject.Models
         public string cityAndState { get; set; }
         [Display(Name = "Zip code")]
         public int zipCode { get; set; }
+        //public IEnumerable<SelectListItem> Days { get; set; }
+
+        public Customer()
+        {
+            dueBalance = 0;
+        }
     }
 }

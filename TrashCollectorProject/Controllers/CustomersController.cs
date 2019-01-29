@@ -13,7 +13,7 @@ using TrashCollectorProject.Models;
 
 namespace TrashCollectorProject.Controllers
 {
-    [Authorize(Roles = "Admin,Employee,Customer")]
+    [Authorize(Roles = "Admin, Employee, Customer")]
     public class CustomersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -25,6 +25,7 @@ namespace TrashCollectorProject.Controllers
             if (isAdminUser() || isEmployeeUser()) {
                 return View(db.Customers.ToList());
             }
+
             List<Customer> custList = db.Customers.Where(c => c.ApplicationUserId == checkedId).ToList();
             return View(custList);
         }
@@ -57,25 +58,15 @@ namespace TrashCollectorProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "pickupDay,oneTimePickupDay,startDate,endDate,dueBalance,addressLine1,addressLine2,cityAndState,zipCode")] Customer customer)
         {
-            
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     customer.ApplicationUserId = User.Identity.GetUserId();
-
                     db.Customers.Add(customer);
                     db.SaveChanges();
-
-                    var errors = ModelState
-                      .Where(x => x.Value.Errors.Count > 0)
-                      .Select(x => new { x.Key, x.Value.Errors })
-                      .ToArray();
-
                     return RedirectToAction("Index");
-
-
                 }
                 catch (DbEntityValidationException e)
                 {
@@ -122,6 +113,7 @@ namespace TrashCollectorProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                customer.ApplicationUserId = User.Identity.GetUserId();
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
