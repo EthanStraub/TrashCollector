@@ -35,11 +35,14 @@ namespace TrashCollectorProject.Models
         public string cityAndState { get; set; }
         [Display(Name = "Zip code")]
         public int zipCode { get; set; }
+        [Display(Name = "Pickup Confirmation")]
+        public string pickupStatus { get; set; }
         //public IEnumerable<SelectListItem> Days { get; set; }
 
         public Customer()
         {
             dueBalance = 0;
+            pickupStatus = "Pending";
         }
     }
 }
