@@ -22,8 +22,18 @@ namespace TrashCollectorProject.Controllers
         public ActionResult Index()
         {
             string checkedId = User.Identity.GetUserId();
-            if (isAdminUser() || isEmployeeUser()) {
+
+
+            if (isAdminUser()) {
                 return View(db.Customers.ToList());
+            }
+            else if(isEmployeeUser())
+            {
+                List<Employee> empList = db.Employees.Where(e => e.ApplicationUserId == checkedId).ToList();
+                int checkedZip = empList[empList.Count].zipCode;
+
+                return View(db.Customers.Where(c => c.zipCode == checkedZip));
+                //return View(db.Customers.ToList());
             }
 
             List<Customer> custList = db.Customers.Where(c => c.ApplicationUserId == checkedId).ToList();

@@ -25,7 +25,10 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("View and edit pickup information", "Index", "Customers")</li>
-                    
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <li>@Html.ActionLink("View/add your zip code", "Index", "Employees")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

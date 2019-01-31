@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Security;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TrashCollectorProject.Models
 {
@@ -12,13 +13,16 @@ namespace TrashCollectorProject.Models
     {
         [Key]
         public int ID { get; set; }
-        //[Display(Name = "Address line 1")]
-        //public string addressLine1 { get; set; }
-        //[Display(Name = "Address line 2 (optional)")]
-        //public string addressLine2 { get; set; }
-        //[Display(Name = "City and state (i.e 'Madison, WI')")]
-        //public string cityAndState { get; set; }
-        [Display(Name = "Zip code")]
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserId { get; set; }
+        //[ForeignKey("UserName")]
+        //public string ApplicationUserName { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        [Display(Name = "First Name (required)")]
+        public string firstName { get; set; }
+        [Display(Name = "Last Name (required)")]
+        public string lastName { get; set; }
+        [Display(Name = "Zip code (required)")]
         public int zipCode { get; set; }
     }
 }
