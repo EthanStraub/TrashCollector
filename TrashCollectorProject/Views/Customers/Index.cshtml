@@ -13,6 +13,12 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.firstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.pickupDay)
         </th>
         <th>
@@ -46,6 +52,12 @@
     {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.firstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastName)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.pickupDay)
         </td>
         <td>
@@ -73,8 +85,10 @@
             @Html.DisplayFor(modelItem => item.pickupStatus)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+            <br />
+            @Html.ActionLink("Details", "Details", new { id = item.ID })
+            <br />
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
 
@@ -85,7 +99,7 @@
 
 @foreach (var item in Model)
 {
-    <h3>
-        Due balance of user: @Html.DisplayFor(modelItem => item.dueBalance)$.
-    </h3>
+<h5>
+    Due balance on @Html.DisplayFor(modelItem => item.firstName) @Html.DisplayFor(modelItem => item.lastName)'s pickup plan: @Html.DisplayFor(modelItem => item.dueBalance)$.
+</h5>
 }

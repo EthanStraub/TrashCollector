@@ -13,7 +13,9 @@ namespace TrashCollectorProject.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         ApplicationUserId = c.String(maxLength: 128),
-                        pickupDay = c.String(),
+                        firstName = c.String(),
+                        lastName = c.String(),
+                        pickupDay = c.Int(nullable: false),
                         oneTimePickupDay = c.DateTime(nullable: false),
                         startDate = c.DateTime(nullable: false),
                         endDate = c.DateTime(nullable: false),
@@ -22,6 +24,7 @@ namespace TrashCollectorProject.Migrations
                         addressLine2 = c.String(),
                         cityAndState = c.String(),
                         zipCode = c.Int(nullable: false),
+                        pickupStatus = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)

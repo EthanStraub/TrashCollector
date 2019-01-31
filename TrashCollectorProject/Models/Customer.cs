@@ -16,9 +16,15 @@ namespace TrashCollectorProject.Models
         public int ID { get; set; }
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
+        //[ForeignKey("UserName")]
+        //public string ApplicationUserName { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        [Display(Name = "Pickup day (i.e 'Monday', 'Tuesday', and so on)")]
-        public string pickupDay { get; set; }
+        [Display(Name = "First name (required)")]
+        public string firstName { get; set; }
+        [Display(Name = "Last name (required)")]
+        public string lastName { get; set; }
+        [Display(Name = "Pickup day (required)")]
+        public Day pickupDay { get; set; }
         [Display(Name = "One-time pickup date (optional) (i.e '2/15/2019')")]
         public DateTime oneTimePickupDay { get; set; }
         [Display(Name = "Pickup suspension start date (optional)")]
@@ -27,22 +33,34 @@ namespace TrashCollectorProject.Models
         public DateTime endDate { get; set; }
         [Display(Name = "Due balance on your account")]
         public int dueBalance { get; set; }
-        [Display(Name = "Address line 1")]
+        [Display(Name = "Address line 1 (required)")]
         public string addressLine1 { get; set; }
         [Display(Name = "Address line 2 (optional)")]
         public string addressLine2 { get; set; }
         [Display(Name = "City and state (i.e 'Madison, WI')")]
         public string cityAndState { get; set; }
-        [Display(Name = "Zip code")]
+        [Display(Name = "Zip code (required)")]
         public int zipCode { get; set; }
         [Display(Name = "Pickup Confirmation")]
-        public string pickupStatus { get; set; }
-        //public IEnumerable<SelectListItem> Days { get; set; }
-
+        public PickupStatus pickupStatus { get; set; }
         public Customer()
         {
+            pickupStatus = 0;
             dueBalance = 0;
-            pickupStatus = "Pending";
         }
+    }
+    public enum Day
+    {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday
+    }
+    public enum PickupStatus
+    {
+        Pending,
+        Aproved
     }
 }
