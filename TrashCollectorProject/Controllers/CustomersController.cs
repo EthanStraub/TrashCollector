@@ -30,7 +30,7 @@ namespace TrashCollectorProject.Controllers
             else if(isEmployeeUser())
             {
                 List<Employee> empList = db.Employees.Where(e => e.ApplicationUserId == checkedId).ToList();
-                int checkedZip = empList[empList.Count].zipCode;
+                int checkedZip = empList[empList.Count-1].zipCode;
 
                 return View(db.Customers.Where(c => c.zipCode == checkedZip));
                 //return View(db.Customers.ToList());

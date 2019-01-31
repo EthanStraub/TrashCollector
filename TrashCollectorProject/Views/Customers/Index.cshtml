@@ -90,6 +90,10 @@
             @Html.ActionLink("Details", "Details", new { id = item.ID })
             <br />
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            @if (User.IsInRole("Employee"))
+            {
+                @Html.ActionLink("Approve", "Approve", "Employees", new { id = item.ID }, null)
+            }
         </td>
 
     </tr>

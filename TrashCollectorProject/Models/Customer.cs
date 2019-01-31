@@ -45,7 +45,7 @@ namespace TrashCollectorProject.Models
         public PickupStatus pickupStatus { get; set; }
         public Customer()
         {
-            pickupStatus = 0;
+            pickupStatus = PickupStatus.Pending;
             dueBalance = 0;
         }
     }
@@ -61,6 +61,6 @@ namespace TrashCollectorProject.Models
     public enum PickupStatus
     {
         Pending,
-        Aproved
+        Approved
     }
 }

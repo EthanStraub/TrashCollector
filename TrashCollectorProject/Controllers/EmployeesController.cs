@@ -11,6 +11,7 @@ using TrashCollectorProject.Models;
 
 namespace TrashCollectorProject.Controllers
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class EmployeesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,13 +22,20 @@ namespace TrashCollectorProject.Controllers
             string checkedId = User.Identity.GetUserId();
 
             List<Employee> empList = db.Employees.Where(c => c.ApplicationUserId == checkedId).ToList();
-            if (empList.Count == 0)
+            if (empList.Count > 1)
             {
-                return View(db.Employees.ToList());
+                while(empList.Count > 1)
+                {
+                    Employee extraInfo = empList[0];
+                    empList.RemoveAt(0);
+                    db.Employees.Remove(extraInfo);
+                    db.SaveChanges();
+                }
+                return View(empList);
             }
             else
             {
-                return View(empList[empList.Count]);
+                return View(empList);
             }      
         }
 
@@ -124,6 +132,33 @@ namespace TrashCollectorProject.Controllers
         {
             Employee employee = db.Employees.Find(id);
             db.Employees.Remove(employee);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Employees/Approve/5
+        public ActionResult Approve(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+
+        // POST: Employees/Approve/5
+        [HttpPost, ActionName("Approve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApproveConfirmed(int id)
+        {
+            Customer customer = db.Customers.Find(id);
+            customer.dueBalance += 10;
+            customer.pickupStatus = PickupStatus.Approved;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,15 +1,17 @@
 ﻿@model TrashCollectorProject.Models.Customer
-
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Approve";
 }
 
-<h2>Details</h2>
+<h2>Approve</h2>
 
+
+<h3>Are you sure you want to approve this collection plan?</h3>
 <div>
-    <h4>Customer</h4>
+    <h4>Collection plan</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.firstName)
         </dt>
@@ -28,6 +30,10 @@
 
         <dt>
             @Html.DisplayNameFor(model => model.pickupDay)
+        </dt>
+
+        <dt>
+            @Html.DisplayFor(model => model.pickupDay)
         </dt>
 
         <dt>
@@ -99,8 +105,14 @@
         </dt>
 
     </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Approve" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
