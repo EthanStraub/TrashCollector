@@ -32,8 +32,7 @@ namespace TrashCollectorProject.Controllers
                 List<Employee> empList = db.Employees.Where(e => e.ApplicationUserId == checkedId).ToList();
                 int checkedZip = empList[empList.Count-1].zipCode;
 
-                return View(db.Customers.Where(c => c.zipCode == checkedZip));
-                //return View(db.Customers.ToList());
+                return View(db.Customers.Where(c => c.zipCode == checkedZip && c.pickupStatus != PickupStatus.Approved));
             }
 
             List<Customer> custList = db.Customers.Where(c => c.ApplicationUserId == checkedId).ToList();
@@ -71,29 +70,10 @@ namespace TrashCollectorProject.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    customer.ApplicationUserId = User.Identity.GetUserId();
-                    db.Customers.Add(customer);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
-                                ve.PropertyName,
-                                eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
-                                ve.ErrorMessage);
-                        }
-                    }
-                    throw;
-                }
+                customer.ApplicationUserId = User.Identity.GetUserId();
+                db.Customers.Add(customer);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View(customer);

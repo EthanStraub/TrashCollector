@@ -160,7 +160,37 @@ namespace TrashCollectorProject.Controllers
             customer.dueBalance += 10;
             customer.pickupStatus = PickupStatus.Approved;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Customers");
+        }
+
+        public ActionResult Filter()
+        {
+            return View();
+        }
+
+        // GET: Employees/Filter
+        [HttpGet, ActionName("Filter")]
+        public ActionResult Filter(Day? day)
+        {
+            string checkedId = User.Identity.GetUserId();
+            List<Employee> empList = db.Employees.Where(e => e.ApplicationUserId == checkedId).ToList();
+            int checkedZip = empList[empList.Count - 1].zipCode;
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "Monday", Value = "1" });
+            items.Add(new SelectListItem() { Text = "Tuesday", Value = "2" });
+            items.Add(new SelectListItem() { Text = "Wednesday", Value = "3" });
+            items.Add(new SelectListItem() { Text = "Thursday", Value = "4" });
+            items.Add(new SelectListItem() { Text = "Friday", Value = "5" });
+            items.Add(new SelectListItem() { Text = "Saturday", Value = "6" });
+            var ddl = from d in items
+                      select d.Text;
+            ViewBag.Day = ddl;
+
+            var custList = db.Customers.Where(c => c.pickupDay == day);
+            custList = custList.Where(c => c.zipCode == checkedZip && c.pickupStatus != PickupStatus.Approved);
+
+            return View(custList);
         }
 
         protected override void Dispose(bool disposing)

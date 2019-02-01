@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TrashCollectorProject.Models.Customer>
+﻿@using TrashCollectorProject.Models
+@model IEnumerable<TrashCollectorProject.Models.Customer>
 
 @{
     ViewBag.Title = "Index";
@@ -6,9 +7,18 @@
 
 <h2>Customer Information</h2>
 
-<p>
-    @Html.ActionLink("Create New Pickup Info", "Create")
-</p>
+@if (User.IsInRole("Customer"))
+{
+    <p>
+        @Html.ActionLink("Create New Pickup Info", "Create")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Filter customers by pickup day.", "Filter", "Employees", new { day = Day.Monday }, null)
+    </p>
+}
 
 <table class="table">
     <tr>
@@ -50,60 +60,60 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.firstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pickupDay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.oneTimePickupDay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.startDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.endDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.addressLine1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.addressLine2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cityAndState)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.zipCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pickupStatus)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-            <br />
-            @Html.ActionLink("Details", "Details", new { id = item.ID })
-            <br />
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            @if (User.IsInRole("Employee"))
-            {
-                @Html.ActionLink("Approve", "Approve", "Employees", new { id = item.ID }, null)
-            }
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pickupDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.oneTimePickupDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.endDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.addressLine1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.addressLine2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cityAndState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.zipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pickupStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                <br />
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                <br />
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @if (User.IsInRole("Employee"))
+                {
+                    @Html.ActionLink("Approve", "Approve", "Employees", new { id = item.ID }, null)
+                }
+            </td>
 
-    </tr>
+        </tr>
     }
 
 </table>
 
 @foreach (var item in Model)
 {
-<h5>
-    Due balance on @Html.DisplayFor(modelItem => item.firstName) @Html.DisplayFor(modelItem => item.lastName)'s pickup plan: @Html.DisplayFor(modelItem => item.dueBalance)$.
-</h5>
+    <h5>
+        Due balance on @Html.DisplayFor(modelItem => item.firstName) @Html.DisplayFor(modelItem => item.lastName)'s pickup plan: @Html.DisplayFor(modelItem => item.dueBalance)$.
+    </h5>
 }

@@ -31,7 +31,7 @@ namespace TrashCollectorProject.Models
         public DateTime startDate { get; set; }
         [Display(Name = "Pickup suspension end date (optional)")]
         public DateTime endDate { get; set; }
-        [Display(Name = "Due balance on your account")]
+        [Display(Name = "Due balance on account")]
         public int dueBalance { get; set; }
         [Display(Name = "Address line 1 (required)")]
         public string addressLine1 { get; set; }
