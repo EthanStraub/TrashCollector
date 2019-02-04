@@ -193,6 +193,20 @@ namespace TrashCollectorProject.Controllers
             return View(custList);
         }
 
+        public ActionResult Map(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

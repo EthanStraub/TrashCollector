@@ -103,6 +103,8 @@ else
                 @if (User.IsInRole("Employee"))
                 {
                     @Html.ActionLink("Approve", "Approve", "Employees", new { id = item.ID }, null)
+                    <br />
+                    @Html.ActionLink("Map", "Map", "Employees", new { id = item.ID }, null)
                 }
             </td>
 

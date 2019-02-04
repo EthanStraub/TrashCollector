@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+@model TrashCollectorProject.Models.Customer
+@{
+    ViewBag.Title = "Map";
+}
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps Multiple Markers</title>
+</head>
+<body>
+    <h3>
+        @Model.addressLine1 @Model.addressLine2, @Model.cityAndState, @Model.zipCode
+    </h3>
+    <div id="map" style="width: 500px; height: 400px;"></div>
+    <script>
+
+        var addressL1 = '@Model.addressLine1';
+        var addressL2 = '@Model.addressLine2';
+        var addressC = '@Model.cityAndState';
+        var addressZ = '@Model.zipCode';
+
+        var concatAddress = (addressL1 + " " + addressL2 + " " + addressC + " " + addressZ);
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 43.074700, lng: -89.384164 }
+            });
+            var geocoder = new google.maps.Geocoder();
+            geocodeAddress(geocoder, map);
+
+        }
+
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = concatAddress
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Mapping was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6WLhevJWcEjesvJ1IvOcvLd38SLVXXQk&callback=initMap">
+    </script>
+    <div>
+        @Html.ActionLink("Back to List", "Index", "Customers")
+    </div>
+</body>
+</html>
